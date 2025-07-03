@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About Us - Ankii's Special Site</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffecf1 0%, #fef9fb 100%);
+    min-height: 100vh;
+    margin: 0;
+  }
+  .lovely-box {
+    background: #ffe4e6;
+    box-shadow: 0 8px 20px rgb(255 182 193 / 0.3);
+  }
+  .btn-fancy {
+    background: #ec4899;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    box-shadow: 0 4px 14px rgb(236 72 153 / 0.45);
+    transition: all 0.25s ease;
+    user-select: none;
+  }
+  .btn-fancy:hover {
+    background: #db2777;
+    box-shadow: 0 6px 18px rgb(219 39 119 / 0.65);
+  }
+
+  @keyframes hugPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  .animate-hug {
+    animation: hugPop 0.6s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<div id="responseBanner" class="hidden bg-green-100 text-green-800 px-4 py-2 text-center font-medium w-full mb-4 rounded-xl fixed top-0 left-0 z-50"></div>
+
+<main class="max-w-4xl mx-auto px-4 py-12">
+  <!-- ... [Your full existing HTML content here remains the same] ... -->
+
+  <!-- Envelope Section -->
+  <section id="envelopeSection" class="relative mx-auto max-w-md cursor-pointer select-none" title="Click to open envelope">
+    <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Envelope" class="mx-auto w-48" id="envelopeImg" />
+    <p class="text-center text-pink-500 mt-2 italic">Click the envelope to see your message</p>
+  </section>
+
+  <!-- Sorry Modal (hidden by default) -->
+  <div id="sorryModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-3xl max-w-xs text-center shadow-lg animate-fadeIn">
+      <h3 class="text-xl font-bold text-pink-600 mb-4">Did you accept my sorry? 🙈</h3>
+      <div class="flex justify-center gap-6">
+        <button class="btn-fancy" onclick="handleSorryResponse(true)">Yes 😊</button>
+        <button class="btn-fancy bg-gray-400 hover:bg-gray-500" onclick="handleSorryResponse(false)">Nope 😒</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- [Rest of your sections like Shimla, likes, dislikes, WhatsApp, etc... remain untouched] -->
+
+</main>
+
+<!-- 🔊 Hug Sound Effect -->
+<audio id="teddyHugSound" src="https://cdn.pixabay.com/audio/2023/03/16/audio_d49308fa6a.mp3" preload="auto"></audio>
+
+<!-- Scripts -->
+<script>
+  // Private Login
+  (function() {
+    if(localStorage.getItem('auth') !== 'true') {
+      const username = prompt('Enter username:');
+      const password = prompt('Enter password:');
+      if(username !== 'funny' || password !== 'ankii') {
+        document.body.innerHTML = '<div style="font-family:sans-serif; text-align:center; margin-top:100px;"><h1>🚫 Access Denied</h1><p>Wrong credentials.</p></div>';
+        throw new Error('Unauthorized');
+      }
+      localStorage.setItem('auth', 'true');
+      alert(`Welcome, ${username}!`);
+    }
+  })();
+
+  // 💌 Envelope Click to show Teddy with Hug + Sound then Sorry Modal
+  document.getElementById('envelopeSection').addEventListener('click', () => {
+    const audio = document.getElementById('teddyHugSound');
+    if (audio) audio.play();
+
+    const teddyPopup = document.createElement('div');
+    teddyPopup.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
+    teddyPopup.innerHTML = `
+      <div class="bg-white p-6 rounded-3xl text-center shadow-xl max-w-sm animate-hug">
+        <h2 class="text-xl font-bold text-pink-600 mb-4">I'm really sorry Ankii... 🥺</h2>
+        <img src="https://i.pinimg.com/originals/3b/64/3f/3b643fc6ba4705e26fdd4e84665e4d0d.gif" 
+             alt="Teddy Sorry Hug" class="mx-auto rounded-xl w-full max-w-xs mb-4" />
+        <button class="btn-fancy mt-2" onclick="this.closest('.fixed').remove(); document.getElementById('sorryModal').classList.remove('hidden');">Okay...</button>
+      </div>
+    `;
+    document.body.appendChild(teddyPopup);
+  });
+
+  // [Rest of your JavaScript like sorry response, Shimla modal, likes/dislikes, comments, birthday countdown... stays untouched]
+</script>
+
+</body>
+</html>
